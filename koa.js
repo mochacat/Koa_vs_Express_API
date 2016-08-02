@@ -3,10 +3,14 @@ require('babel-register')
 
 const Koa = require('koa'),
   router = require('koa-router')(),
+  logger = require('koa-logger'),
   config = require('./config'),
   mongoose = require('mongoose'),
   bodyParser = require('koa-bodyparser'),
   Book = require('./book')
+
+//environment
+const env = process.env.NODE_ENV || 'development'
 
 const app = new Koa()
 require('koa-validate')(app)
@@ -16,7 +20,7 @@ mongoose.connect(config.mongodb)
 
 mongoose.connection.on('error', () => {
   console.log('Mongodb connection error')
-  proces.exit(1)
+  process.exit(1)
 })
 
 mongoose.connection.on('connected', () => {
@@ -24,6 +28,9 @@ mongoose.connection.on('connected', () => {
     console.log('listening on', config.port, config.mongodb)
   })
 })
+
+//logging
+if (env == 'development') app.use(logger())
 
 //general error handling
 app.use(async (ctx, next) => {

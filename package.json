@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run express",
-    "express": "nodemon express.js",
-    "koa": "nodemon entry.js",
+    "express": "NODE_ENV=development nodemon express.js",
+    "koa": "NODE_ENV=development nodemon entry.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "mochacat",
@@ -23,6 +23,8 @@
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.8.0",
     "babel-register": "^6.8.0",
+    "koa-logger": "^1.3.0",
+    "morgan": "^1.7.0",
     "nodemon": "^1.9.2"
   }
 }

@@ -2,9 +2,13 @@
 
 const express = require('express'),
   config = require('./config'),
+  morgan = require('morgan'),
   mongoose = require('mongoose'),
   bodyParser = require('body-parser'),
   Book = require('./book')
+
+//environment
+const env = process.env.NODE_ENV || 'development'
 
 const app = express()
 
@@ -21,6 +25,9 @@ mongoose.connection.on('connected', () => {
     console.log('listening on', config.port, config.mongodb)
   })
 })
+
+//logging
+if (env == 'development') app.use(morgan('tiny'))
 
 //general error handling
 app.use((err, req, res, next) => {
